@@ -1,0 +1,190 @@
+header {
+    background-image: url("../assets/lampos-aritonang-24gR_9lCdes-unsplash 1.jpg");
+    background-size: cover;
+    height: 667px;
+    width: 100%;
+}
+
+header img {
+    margin: 51px 0 0 69px;
+}
+
+.headline {
+    margin: 245px auto 0 auto;
+    width: 890px;
+    height: 132px;
+}
+
+.headline h1 {
+    color: #FFD15B;
+    font-size: 2.75em;
+    font-family: "Anton";
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 66.24px;
+}
+
+.search-bar {
+    margin: 50px auto 0 auto;
+    text-align: center;
+    width: 954px;
+    height: 72px;
+    border-radius: 11px;
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.search-bar input {
+    width: 90%;
+    height: 80%;
+    font-family: "Manrope";
+    font-weight: 400;
+    font-size: 1em;
+    color: #7A7A7A;
+    border: none;
+}
+
+.search-icon-block {
+    background-color: #1B1B1B;
+    width: 51px;
+    height: 52px;
+    border-radius: 10px;
+}
+
+.search-icon {
+    padding: 12px 0 0 0;
+    margin: 0;
+    width: 27px;
+    height: 28px;
+}
+
+main {
+    background-color: #E5E5E5;
+    color: black;
+}
+
+.container {
+    padding: 30px 100px 150px 100px;
+}
+
+.filters-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters {
+    font-family: "Manrope";
+    font-weight: 500;
+    font-size: 1em;
+    display: flex;
+    gap: 40px;
+}
+
+.filter-element {
+    padding: 17px 16px;
+    border-radius: 11px;
+    background-color: white;
+    display: flex;
+    gap: 63px;
+    align-items: center;
+}
+
+.filter-element img {
+    width: 13px;
+    height: 6px;
+}
+
+.nb-recipes {
+    font-family: "Anton";
+    font-size: 1.313em;
+}
+
+.recipes {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    row-gap: 15px;
+}
+
+.recipe-block {
+    width: 380px;
+    height: 731px;
+    background-color: white;
+    border-radius: 21px;
+    position: relative;
+}
+
+.recipe-block img {
+    width: 100%;
+    height: 253px;
+    object-fit: cover;
+    border-radius: 21px 21px 0 0;
+}
+
+.duration {
+    position: absolute;
+    background-color: #FFD15B;
+    top: 21px;
+    left: 295px;
+    border-radius: 14px;
+    width: 63px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75em;
+    font-family: "Manrope";
+    font-weight: 400;
+}
+
+.container-recipe {
+    padding: 32px 25px 0 25px;
+}
+
+.recipe-block h1 {
+    font-family: "Anton";
+    font-size: 1.125em;
+}
+
+.recipe-block h2 {
+    font-family: "Manrope";
+    font-weight: 700;
+    font-size: 0.75em;
+    color: #7A7A7A;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 29px 0 15px 0;
+    margin: 0;
+}
+
+.ingredients, .quantity, .recipe {
+    font-family: "Manrope";
+    font-size: 0.875em;
+    margin: 0;
+}
+
+.recipe {
+    font-weight: 400;
+}
+
+.container-recipe ul {
+    margin: 0;
+    padding: 0;
+}
+
+.container-recipe li {
+    list-style-type: none;
+}
+
+.ingredients {
+    font-weight: 500;
+}
+
+.quantity {
+    color: #7A7A7A;
+    font-weight: 400;
+}
