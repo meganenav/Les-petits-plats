@@ -106,8 +106,8 @@ main {
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 15px;
-    row-gap: 15px;
+    grid-gap: 50px;
+    row-gap: 50px;
 }
 
 .recipe-block {
@@ -182,6 +182,8 @@ main {
 .container-recipe ul {
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-columns: 50% 50%;
 }
 
 .container-recipe li {
@@ -189,6 +191,8 @@ main {
 }
 
 .block-ingredients {
+    display: grid;
+    grid-template-rows: 50% 50%;
     column-count: 2;
     line-height: 19px;
 }

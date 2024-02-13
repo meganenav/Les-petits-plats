@@ -30,6 +30,7 @@ async function createRecipe(recipe) {
     h2Ingredients.textContent = "Ingrédients";
     const divIngredients = document.createElement("div");
     divIngredients.classList.add("block-ingredients");
+    const ul = document.createElement("ul");
 
     recipesSection.appendChild(article);
     article.appendChild(imgRecipe);
@@ -43,7 +44,6 @@ async function createRecipe(recipe) {
 
     const ingredientsArray = recipe["ingredients"];
     ingredientsArray.forEach((ingredient) => {
-        const ul = document.createElement("ul");
         const liIngredients = document.createElement("li");
         const pIngredients = document.createElement("p");
         const pQuantity = document.createElement("p");
