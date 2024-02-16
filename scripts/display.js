@@ -2,6 +2,7 @@ async function init() {
     recipes.forEach((recipe) => {
         createRecipe(recipe);
     });
+    document.querySelector(".nb-recipes span").textContent = recipes.length;
 }
 
 window.onload = (event) => {

@@ -100,6 +100,9 @@ main {
 .nb-recipes {
     font-family: "Anton";
     font-size: 1.313em;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
 }
 
 .recipes {
@@ -177,6 +180,8 @@ main {
     font-family: "Manrope";
     font-size: 0.875em;
     line-height: 19px;
+    max-height: 200px;
+    overflow-y: scroll;
 }
 
 .container-recipe ul {
@@ -204,4 +209,10 @@ main {
 .quantity {
     color: #7A7A7A;
     font-weight: 400;
+}
+
+.no-results {
+    font-family: "Manrope";
+    font-size: 0.875em;
+    font-weight: 500;
 }
