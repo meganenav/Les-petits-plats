@@ -7,6 +7,7 @@ searchInput.addEventListener("input", () => {
     if(searchInput.value.length === 0) {
         document.querySelector(".recipes").style.display = "grid";
         document.querySelector(".recipes").innerHTML = "";
+        document.querySelector(".list-ingredients ul").innerHTML = "";
         init();
     }
 });
@@ -21,7 +22,6 @@ function searchRecipes(letters) {
         const verifName = (recipeNameLowerCase.search(letters) !== -1);
         const verifDescription = (descriptionLowerCase.search(letters) !== -1);
         let verifIngredients = false;     
-        
         for(let ingredientIndex = 0; ingredientIndex < ingredientsArray.length; ingredientIndex++) {
             let ingredient = ingredientsArray[ingredientIndex]["ingredient"];
             ingredient = ingredient.toLowerCase();
@@ -33,7 +33,6 @@ function searchRecipes(letters) {
             recipesArray.push(recipes[i]);
         }
     }
-    console.log(recipesArray);
     if(recipesArray.length !== 0) {
         document.querySelector(".recipes").style.display = "grid";
         createNewRecipes(recipesArray);
@@ -43,6 +42,7 @@ function searchRecipes(letters) {
         let message = "<div class=\"no-results\">Aucune recette ne contient " + letters + ", vous pouvez chercher \"tarte aux pommes \", \" poisson \", etc.</div>";
         document.querySelector(".recipes").innerHTML = message;
         document.querySelector(".nb-recipes span").textContent = 0;
+        document.querySelector(".list-ingredients ul").innerHTML = "";
     }
 }
 
@@ -51,5 +51,6 @@ function createNewRecipes(recipesArray) {
     recipesArray.forEach(recipe => {
         createRecipe(recipe);
     });
+    fillFilters(recipesArray);
     document.querySelector(".nb-recipes span").textContent = recipesArray.length;
 }

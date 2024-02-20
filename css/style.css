@@ -1,3 +1,12 @@
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
 header {
     background-image: url("../assets/lampos-aritonang-24gR_9lCdes-unsplash 1.jpg");
     background-size: cover;
@@ -88,13 +97,63 @@ main {
     border-radius: 11px;
     background-color: white;
     display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-direction: column;
+    width: 195px;
+    height: 22px;
+}
+
+.arrow {
+    width: 13px;
+    height: 6px;
+}
+
+.block-filter {
+    display: flex;
+    align-items: center;
     gap: 63px;
+    cursor: pointer;
+}
+
+.search-filter-block {
+    width: 190px;
+    height: 36px;
+    border: 1px solid #C6C6C6;
+    margin-bottom: 15px;
+    display: flex;
     align-items: center;
 }
 
-.filter-element img {
-    width: 13px;
-    height: 6px;
+.search-filter {
+    width: 160px;
+    border: none;
+}
+
+.search-filter-img{
+    width: 13.5px;
+    height: 14px;
+}
+
+.filter-list {
+    display: none;
+    background: white;
+    width: 195px;
+    padding: 0 16px 0 16px;
+    position: relative;
+    z-index: 100;
+    border-radius: 0 0 11px 11px;
+}
+
+.filter-list ul {
+    overflow-y: scroll;
+    max-height: 170px;
+}
+
+.filter-list li {
+    font-weight: 400;
+    padding: 7px 0;
+    line-height: 1.19;
 }
 
 .nb-recipes {
@@ -185,8 +244,6 @@ main {
 }
 
 .container-recipe ul {
-    margin: 0;
-    padding: 0;
     display: grid;
     grid-template-columns: 50% 50%;
 }
