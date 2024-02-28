@@ -2,6 +2,7 @@ async function init() {
     recipes.forEach((recipe) => {
         createRecipe(recipe);
     });
+    fillFilters(recipes);
     document.querySelector(".nb-recipes span").textContent = recipes.length;
 }
 

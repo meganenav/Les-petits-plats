@@ -1,31 +1,31 @@
-const filterIngredients = document.querySelector(".filter-ingredients");
-const filterAppliances = document.querySelector(".filter-appliances");
-const filterUstensils = document.querySelector(".filter-ustensils");
-filterIngredients.addEventListener("click", () => {
+const arrowIngredients = document.querySelector(".arrow-ingredients");
+const arrowAppliances = document.querySelector(".arrow-appliances");
+const arrowUstensils = document.querySelector(".arrow-ustensils");
+arrowIngredients.addEventListener("click", () => {
     const listIngredients = document.querySelector(".list-ingredients");
     if(listIngredients.classList.contains("ingredients-open")) {
-        closeElementsFilter("ingredients");
+        closeElementsFilter("ingredients", arrowIngredients);
     }
     else {
-        showElementsFilter("ingredients");
+        showElementsFilter("ingredients", arrowIngredients);
     }
 });
-filterAppliances.addEventListener("click", () => {
+arrowAppliances.addEventListener("click", () => {
     const listAppliances = document.querySelector(".list-appliances");
     if(listAppliances.classList.contains("appliances-open")) {
-        closeElementsFilter("appliances");
+        closeElementsFilter("appliances", arrowAppliances);
     }
     else {
-        showElementsFilter("appliances");
+        showElementsFilter("appliances", arrowAppliances);
     }
 });
-filterUstensils.addEventListener("click", () => {
+arrowUstensils.addEventListener("click", () => {
     const listUstensils = document.querySelector(".list-ustensils");
     if(listUstensils.classList.contains("ustensils-open")) {
-        closeElementsFilter("ustensils");
+        closeElementsFilter("ustensils", arrowUstensils);
     }
     else {
-        showElementsFilter("ustensils");
+        showElementsFilter("ustensils", arrowUstensils);
     }
 });
 
@@ -57,7 +57,7 @@ function prepareIngredientsFilter(recipesArray) {
     }
     ingredientsArray = getUniqueElements(ingredientsArray);
     const listIngredients = document.querySelector(".list-ingredients ul");
-    displayElementsFilter(listIngredients, ingredientsArray);
+    displayElementsFilter(listIngredients, ingredientsArray, "ingredients", recipesArray);
 }
 
 function prepareAppliancesFilter(recipesArray) {
@@ -69,7 +69,7 @@ function prepareAppliancesFilter(recipesArray) {
     }
     appliancesArray = getUniqueElements(appliancesArray);
     const listAppliances = document.querySelector(".list-appliances ul");
-    displayElementsFilter(listAppliances, appliancesArray);
+    displayElementsFilter(listAppliances, appliancesArray, "appliances", recipesArray);
 }
 
 function prepareUstensilsFilter(recipesArray) {
@@ -84,19 +84,27 @@ function prepareUstensilsFilter(recipesArray) {
     }
     ustensilsArray = getUniqueElements(ustensilsArray);
     const listUstensils = document.querySelector(".list-ustensils ul");
-    displayElementsFilter(listUstensils, ustensilsArray);
+    displayElementsFilter(listUstensils, ustensilsArray, "ustensils", recipesArray);
 }
 
-function displayElementsFilter(listElementsUl, elementsArray) {
+function displayElementsFilter(listElementsUl, elementsArray, type, recipesArray) {
     listElementsUl.innerHTML = "";
     elementsArray.forEach(element => {
         const li = document.createElement("li");
         li.textContent = element;
         listElementsUl.appendChild(li);
     });
+    listenElementsFilter(listElementsUl, type, recipesArray);
 }
 
-function showElementsFilter(element) {
+function listenElementsFilter(listElementsUl, type, recipes) {
+    const listElements = listElementsUl.children;
+    Array.from(listElements).forEach((element) => element.addEventListener("click", () => {
+        filterByTag(element, recipes, type);
+    }));
+}
+
+function showElementsFilter(element, arrow) {
     if(element === "ingredients") {
         const listIngredients = document.querySelector(".list-ingredients");
         listIngredients.style.display = "block";
@@ -112,9 +120,10 @@ function showElementsFilter(element) {
         listUstensils.style.display = "block";
         listUstensils.classList.add("ustensils-open");
     }
+    arrow.setAttribute("src", "assets/arrow-reverse.svg");
 }
 
-function closeElementsFilter(element) {
+function closeElementsFilter(element, arrow) {
     if(element === "ingredients") {
         const listIngredients = document.querySelector(".list-ingredients");
         listIngredients.style.display = "none";
@@ -130,4 +139,5 @@ function closeElementsFilter(element) {
         listUstensils.style.display = "none";
         listUstensils.classList.remove("ustensils-open");
     }
+    arrow.setAttribute("src", "assets/arrow.svg");
 }

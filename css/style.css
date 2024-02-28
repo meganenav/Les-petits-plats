@@ -33,7 +33,7 @@ header img {
     line-height: 66.24px;
 }
 
-.search-bar {
+.search-form {
     margin: 50px auto 0 auto;
     text-align: center;
     width: 954px;
@@ -107,13 +107,13 @@ main {
 .arrow {
     width: 13px;
     height: 6px;
+    cursor: pointer;
 }
 
 .block-filter {
     display: flex;
     align-items: center;
     gap: 63px;
-    cursor: pointer;
 }
 
 .search-filter-block {
@@ -154,6 +154,7 @@ main {
     font-weight: 400;
     padding: 7px 0;
     line-height: 1.19;
+    cursor: pointer;
 }
 
 .nb-recipes {
