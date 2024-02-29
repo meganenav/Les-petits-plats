@@ -4,28 +4,28 @@ const arrowUstensils = document.querySelector(".arrow-ustensils");
 arrowIngredients.addEventListener("click", () => {
     const listIngredients = document.querySelector(".list-ingredients");
     if(listIngredients.classList.contains("ingredients-open")) {
-        closeElementsFilter("ingredients", arrowIngredients);
+        closeElementsFilter("ingredients");
     }
     else {
-        showElementsFilter("ingredients", arrowIngredients);
+        showElementsFilter("ingredients");
     }
 });
 arrowAppliances.addEventListener("click", () => {
     const listAppliances = document.querySelector(".list-appliances");
     if(listAppliances.classList.contains("appliances-open")) {
-        closeElementsFilter("appliances", arrowAppliances);
+        closeElementsFilter("appliances");
     }
     else {
-        showElementsFilter("appliances", arrowAppliances);
+        showElementsFilter("appliances");
     }
 });
 arrowUstensils.addEventListener("click", () => {
     const listUstensils = document.querySelector(".list-ustensils");
     if(listUstensils.classList.contains("ustensils-open")) {
-        closeElementsFilter("ustensils", arrowUstensils);
+        closeElementsFilter("ustensils");
     }
     else {
-        showElementsFilter("ustensils", arrowUstensils);
+        showElementsFilter("ustensils");
     }
 });
 
@@ -103,22 +103,27 @@ function listenElementsFilter(listElementsUl, type, recipes) {
     for(let i = 0; i < listElements.length; i++) {
         listElements[i].addEventListener("click", () => {
             filterByTag(listElements[i], recipes, type);
+            closeElementsFilter(type);
         });
     }
 }
 
-function showElementsFilter(element, arrow) {
+function showElementsFilter(element) {
+    let arrow;
     if(element === "ingredients") {
+        arrow = document.querySelector(".arrow-ingredients");
         const listIngredients = document.querySelector(".list-ingredients");
         listIngredients.style.display = "block";
         listIngredients.classList.add("ingredients-open");
     }
     if(element === "appliances") {
+        arrow = document.querySelector(".arrow-appliances");
         const listAppliances = document.querySelector(".list-appliances");
         listAppliances.style.display = "block";
         listAppliances.classList.add("appliances-open");
     }
     if(element === "ustensils") {
+        arrow = document.querySelector(".arrow-ustensils");
         const listUstensils = document.querySelector(".list-ustensils");
         listUstensils.style.display = "block";
         listUstensils.classList.add("ustensils-open");
@@ -126,18 +131,22 @@ function showElementsFilter(element, arrow) {
     arrow.setAttribute("src", "assets/arrow-reverse.svg");
 }
 
-function closeElementsFilter(element, arrow) {
+function closeElementsFilter(element) {
+    let arrow;
     if(element === "ingredients") {
+        arrow = document.querySelector(".arrow-ingredients");
         const listIngredients = document.querySelector(".list-ingredients");
         listIngredients.style.display = "none";
         listIngredients.classList.remove("ingredients-open");
     }
     if(element === "appliances") {
+        arrow = document.querySelector(".arrow-appliances");
         const listAppliances = document.querySelector(".list-appliances");
         listAppliances.style.display = "none";
         listAppliances.classList.remove("appliances-open");
     }
     if(element === "ustensils") {
+        arrow = document.querySelector(".arrow-ustensils");
         const listUstensils = document.querySelector(".list-ustensils");
         listUstensils.style.display = "none";
         listUstensils.classList.remove("ustensils-open");
