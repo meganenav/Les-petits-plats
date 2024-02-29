@@ -89,19 +89,22 @@ function prepareUstensilsFilter(recipesArray) {
 
 function displayElementsFilter(listElementsUl, elementsArray, type, recipesArray) {
     listElementsUl.innerHTML = "";
-    elementsArray.forEach(element => {
+    for(let i = 0; i < elementsArray.length; i++) {
         const li = document.createElement("li");
-        li.textContent = element;
+        li.textContent = elementsArray[i];
         listElementsUl.appendChild(li);
-    });
+    }
     listenElementsFilter(listElementsUl, type, recipesArray);
 }
 
 function listenElementsFilter(listElementsUl, type, recipes) {
-    const listElements = listElementsUl.children;
-    Array.from(listElements).forEach((element) => element.addEventListener("click", () => {
-        filterByTag(element, recipes, type);
-    }));
+    let listElements = listElementsUl.children;
+    listElements = Array.from(listElements);
+    for(let i = 0; i < listElements.length; i++) {
+        listElements[i].addEventListener("click", () => {
+            filterByTag(listElements[i], recipes, type);
+        });
+    }
 }
 
 function showElementsFilter(element, arrow) {

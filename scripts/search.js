@@ -82,9 +82,9 @@ function verificationUstensils(letters, recipe) {
 
 function createNewRecipes(recipesArray) {
     document.querySelector(".recipes").innerHTML = "";
-    recipesArray.forEach(recipe => {
-        createRecipe(recipe);
-    });
+    for(let i = 0; i < recipesArray.length; i++) {
+        createRecipe(recipesArray[i]);
+    }
     fillFilters(recipesArray);
     document.querySelector(".nb-recipes span").textContent = recipesArray.length;
 }

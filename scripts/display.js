@@ -1,7 +1,7 @@
 async function init() {
-    recipes.forEach((recipe) => {
-        createRecipe(recipe);
-    });
+    for(let i = 0; i < recipes.length; i++) {
+        createRecipe(recipes[i]);
+    }
     fillFilters(recipes);
     document.querySelector(".nb-recipes span").textContent = recipes.length;
 }
@@ -45,22 +45,22 @@ async function createRecipe(recipe) {
     divRecipe.appendChild(divIngredients);
 
     const ingredientsArray = recipe["ingredients"];
-    ingredientsArray.forEach((ingredient) => {
+    for(let i = 0; i < ingredientsArray.length; i++) {
         const liIngredients = document.createElement("li");
         const pIngredients = document.createElement("p");
         const pQuantity = document.createElement("p");
         pIngredients.classList.add("ingredients");
-        pIngredients.textContent = ingredient["ingredient"];
+        pIngredients.textContent = ingredientsArray[i]["ingredient"];
         pQuantity.classList.add("quantity");
-        if(ingredient["quantity"]) {
-            pQuantity.textContent = ingredient["quantity"];
+        if(ingredientsArray[i]["quantity"]) {
+            pQuantity.textContent = ingredientsArray[i]["quantity"];
         }
-        if(ingredient["unit"]) {
-            pQuantity.textContent += " " + ingredient["unit"];
+        if(ingredientsArray[i]["unit"]) {
+            pQuantity.textContent += " " + ingredientsArray[i]["unit"];
         }
         divIngredients.appendChild(ul);
         ul.appendChild(liIngredients);
         liIngredients.appendChild(pIngredients);
         liIngredients.appendChild(pQuantity);
-    });
+    }
 }
