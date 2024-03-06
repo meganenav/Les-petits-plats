@@ -193,6 +193,18 @@ main {
     cursor: pointer;
 }
 
+.item-selected {
+    background-color: #FFD15B;
+    display: flex;
+    align-items: center;
+    width: 210px;
+    height: 37px;
+    margin-bottom: 20px;
+    position: relative;
+    left: -15px;
+    padding-left: 15px;
+}
+
 .recipes {
     margin-top: 50px;
     display: grid;

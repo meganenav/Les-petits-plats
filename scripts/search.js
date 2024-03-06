@@ -1,8 +1,13 @@
 const searchInput = document.querySelector(".search-input");
 searchInput.addEventListener("input", () => {
+    searchInputValue(searchInput, "input");
+});
+
+function searchInputValue(searchInput) {
+    let recipesArray = recipes;
     if(searchInput.value.length >= 3) {
         document.querySelector(".recipes").style.display = "grid";
-        searchRecipes(searchInput.value);
+        searchRecipes(recipesArray);
     }
     if(searchInput.value.length < 3) {
         document.querySelector(".recipes").style.display = "grid";
@@ -10,22 +15,25 @@ searchInput.addEventListener("input", () => {
         document.querySelector(".list-ingredients ul").innerHTML = "";
         init();
     }
-});
+}
 
-function searchRecipes(letters) {
-    letters = letters.toLowerCase();
-    let recipesArray = [];
-    for(let i = 0; i < recipes.length; i++) {;
-        const verifName = verificationName(letters, recipes[i]);
-        const verifDescription = verificationDescription(letters, recipes[i]);
-        verifIngredients = verificationIngredients(letters, recipes[i]);
-        if(verifName || verifDescription || verifIngredients) {
-            recipesArray.push(recipes[i]);
-        }
+function searchRecipes() {
+    let newRecipesArray = [];
+    let recipesArray = recipes;
+    if(searchInput.value.length !== 0) {
+        recipesArray = searchInputFunction(searchInput, recipesArray);
     }
-    if(recipesArray.length !== 0) {
+    let tagsIngredients = getTagsIngredients();
+    if(tagsIngredients.length !== 0) {
+        newRecipesArray = searchTagsIngredients(newRecipesArray, recipesArray, tagsIngredients);
+    }
+    if(newRecipesArray.length === 0) {
+        newRecipesArray = recipesArray;
+    }
+    if(newRecipesArray.length !== 0) {
+        document.querySelector(".recipes").innerHTML = "";
         document.querySelector(".recipes").style.display = "grid";
-        createNewRecipes(recipesArray);
+        createNewRecipes(newRecipesArray);
     }
     else {
         document.querySelector(".recipes").style.display = "flex";
@@ -34,6 +42,68 @@ function searchRecipes(letters) {
         document.querySelector(".nb-recipes span").textContent = 0;
         document.querySelector(".list-ingredients ul").innerHTML = "";
     }
+}
+
+function searchInputFunction(element, recipesArray) {
+    let newRecipesArray = [];
+    letters = element.value.toLowerCase();
+    for(let i = 0; i < recipesArray.length; i++) {
+        const verifName = verificationName(letters, recipes[i]);
+        const verifDescription = verificationDescription(letters, recipes[i]);
+        const verifIngredients = verificationIngredients(letters, recipes[i]);
+        if(verifName || verifDescription || verifIngredients) {
+            newRecipesArray.push(recipesArray[i]);
+        }
+    }
+    return newRecipesArray;
+}
+
+function searchTagsIngredients(newRecipesArray, recipesArray, tagsIngredients) {
+    for(let y = 0; y < recipesArray.length; y++) {
+        let verifIngredients = true;
+        for(let i = 0; i < tagsIngredients.length; i++) {
+            let verifTagsIngredients = verificationIngredients(tagsIngredients[i], recipesArray[y]);
+            if(verifTagsIngredients === false) {
+                verifIngredients = false;
+            }
+        }
+        if(verifIngredients === true) {
+            newRecipesArray.push(recipesArray[y]);
+        }
+    }
+    return newRecipesArray;
+}
+
+function searchTagsAppliances(newRecipesArray, recipesArray, tagsAppliances) {
+    let verifAppliances = true;
+    for(let y = 0; y < recipesArray.length; y++) {
+        for(let i = 0; i < tagsAppliances.length; i++) {
+            let verifTagsAppliances = verificationAppliances(tagsAppliances[i], recipesArray[y]);
+            if(verifTagsAppliances === false) {
+                verifAppliances = false;
+            }
+        }
+        if(verifAppliances === true) {
+            newRecipesArray.push(recipesArray[y]);
+        }
+    }
+    return newRecipesArray;
+}
+
+function searchTagsUstensils(newRecipesArray, recipesArray, tagsUstensils) {
+    let verifUstensils = true;
+    for(let y = 0; y < recipesArray.length; y++) {
+        for(let i = 0; i < tagsUstensils.length; i++) {
+            let verifTagsUstensils = verificationUstensils(tagsUstensils[i], recipesArray[y]);
+            if(verifTagsUstensils === false) {
+                verifUstensils = false;
+            }
+        }
+        if(verifUstensils === true) {
+            newRecipesArray.push(recipesArray[y]);
+        }
+    }
+    return newRecipesArray;
 }
 
 function verificationName(letters, recipe) {

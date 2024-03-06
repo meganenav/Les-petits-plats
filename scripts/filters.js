@@ -84,25 +84,26 @@ function prepareUstensilsFilter(recipesArray) {
     }
     ustensilsArray = getUniqueElements(ustensilsArray);
     const listUstensils = document.querySelector(".list-ustensils ul");
-    displayElementsFilter(listUstensils, ustensilsArray, "ustensils", recipesArray);
+    displayElementsFilter(listUstensils, ustensilsArray, "ustensils");
 }
 
-function displayElementsFilter(listElementsUl, elementsArray, type, recipesArray) {
+function displayElementsFilter(listElementsUl, elementsArray, type) {
     listElementsUl.innerHTML = "";
     for(let i = 0; i < elementsArray.length; i++) {
         const li = document.createElement("li");
         li.textContent = elementsArray[i];
         listElementsUl.appendChild(li);
     }
-    listenElementsFilter(listElementsUl, type, recipesArray);
+    listenElementsFilter(listElementsUl, type);
 }
 
-function listenElementsFilter(listElementsUl, type, recipes) {
+function listenElementsFilter(listElementsUl, type) {
     let listElements = listElementsUl.children;
     listElements = Array.from(listElements);
     for(let i = 0; i < listElements.length; i++) {
         listElements[i].addEventListener("click", () => {
-            filterByTag(listElements[i], recipes, type);
+            filterByTag(listElements[i], type);
+            searchRecipes();
             closeElementsFilter(type);
         });
     }

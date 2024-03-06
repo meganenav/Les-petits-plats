@@ -6,7 +6,7 @@ async function init() {
     document.querySelector(".nb-recipes span").textContent = recipes.length;
 }
 
-window.onload = (event) => {
+window.onload = () => {
     init();
 };
 
