@@ -23,9 +23,10 @@ function searchRecipes() {
     if(searchInput.value.length !== 0) {
         recipesArray = searchInputFunction(searchInput, recipesArray);
     }
-    let tagsIngredients = getTagsIngredients();
-    if(tagsIngredients.length !== 0) {
-        newRecipesArray = searchTagsIngredients(newRecipesArray, recipesArray, tagsIngredients);
+    let tagsElements = getTags();
+    console.log(tagsElements);
+    if(tagsElements.length !== 0) {
+        newRecipesArray = searchElementTags(tagsElements, recipesArray);
     }
     if(newRecipesArray.length === 0) {
         newRecipesArray = recipesArray;
@@ -58,49 +59,21 @@ function searchInputFunction(element, recipesArray) {
     return newRecipesArray;
 }
 
-function searchTagsIngredients(newRecipesArray, recipesArray, tagsIngredients) {
-    for(let y = 0; y < recipesArray.length; y++) {
-        let verifIngredients = true;
-        for(let i = 0; i < tagsIngredients.length; i++) {
-            let verifTagsIngredients = verificationIngredients(tagsIngredients[i], recipesArray[y]);
-            if(verifTagsIngredients === false) {
-                verifIngredients = false;
+function searchElementTags(tagsElements, recipesArray) {
+    let newRecipesArray = [];
+    for(let i = 0; i < recipesArray.length; i++) {
+        let verif = true;
+        for(let y = 0; y < tagsElements.length; y++) {
+            tag = tagsElements[y].toLowerCase();
+            let verifIngredients = verificationIngredients(tagsElements[y], recipesArray[i]);
+            let verifAppliances = verificationAppliances(tagsElements[y], recipesArray[i]);
+            let verifUstensils = verificationUstensils(tagsElements[y], recipesArray[i]);
+            if(verifIngredients === false && verifAppliances === false && verifUstensils === false) {
+                verif = false;
             }
         }
-        if(verifIngredients === true) {
-            newRecipesArray.push(recipesArray[y]);
-        }
-    }
-    return newRecipesArray;
-}
-
-function searchTagsAppliances(newRecipesArray, recipesArray, tagsAppliances) {
-    let verifAppliances = true;
-    for(let y = 0; y < recipesArray.length; y++) {
-        for(let i = 0; i < tagsAppliances.length; i++) {
-            let verifTagsAppliances = verificationAppliances(tagsAppliances[i], recipesArray[y]);
-            if(verifTagsAppliances === false) {
-                verifAppliances = false;
-            }
-        }
-        if(verifAppliances === true) {
-            newRecipesArray.push(recipesArray[y]);
-        }
-    }
-    return newRecipesArray;
-}
-
-function searchTagsUstensils(newRecipesArray, recipesArray, tagsUstensils) {
-    let verifUstensils = true;
-    for(let y = 0; y < recipesArray.length; y++) {
-        for(let i = 0; i < tagsUstensils.length; i++) {
-            let verifTagsUstensils = verificationUstensils(tagsUstensils[i], recipesArray[y]);
-            if(verifTagsUstensils === false) {
-                verifUstensils = false;
-            }
-        }
-        if(verifUstensils === true) {
-            newRecipesArray.push(recipesArray[y]);
+        if(verif === true) {
+            newRecipesArray.push(recipesArray[i]);
         }
     }
     return newRecipesArray;

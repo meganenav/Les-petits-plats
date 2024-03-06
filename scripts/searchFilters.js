@@ -7,34 +7,6 @@ function filterByTag(element, type) {
         });
     }
 }
-/*function filterByTag(element, recipes, type) {
-    letters = element.textContent.toLowerCase();
-    searchRecipes(element, "tag");
-    let newRecipesArray = [];
-    let verifElement;
-    for(let i = 0; i < recipes.length; i++) {
-        if(type === "ingredients") {
-            verifElement = verificationIngredients(letters, recipes[i]);
-        }
-        if(type === "appliances") {
-            verifElement = verificationAppliances(letters, recipes[i]);
-        }
-        if(type === "ustensils") {
-            verifElement = verificationUstensils(letters, recipes[i]);
-        }
-        if(verifElement) {
-            newRecipesArray.push(recipes[i]);
-        }   
-    }
-    createNewRecipes(newRecipesArray);
-    createTagSpan(element.textContent, type);
-    const tagCloseImg = document.querySelectorAll(".tag-close-img");
-    for(let i = 0; i < tagCloseImg.length; i++) {
-        tagCloseImg[i].addEventListener("click", () => {
-            closeTag(tagCloseImg[i], newRecipesArray);
-        });
-    }
-}*/
 
 function createTagSpan(element, type) {
     const tagsDiv = document.querySelector(".tags");
@@ -50,8 +22,14 @@ function createTagSpan(element, type) {
 }
 
 function closeTag(tagCloseImg) {
+    const selected = document.querySelectorAll(".item-selected");
+    for(let i = 0; i < selected.length; i++) {
+        if(tagCloseImg.parentElement.textContent === selected[i].textContent) {
+            selected[i].remove();
+        }
+    }
     tagCloseImg.parentElement.remove();
-    reinitializationSearch();
+    searchRecipes();
 }
 
 function addTag(element, type) {
@@ -90,37 +68,8 @@ function removeElementToSelected(element, liElements, listElements, ulElements) 
     }
 }
 
-function reinitializationSearch() {
-    const searchInput = document.querySelector(".search-input");
-    searchInputValue(searchInput);
-}
-
-function getTagsIngredients() {
-    let tags = document.querySelectorAll(".list-ingredients .item-selected");
-    tags = Array.from(tags);
-    let tagsTextContent = [];
-    for(let y = 0; y < tags.length; y++) {
-        if(tags[y].textContent !== "") {
-            tagsTextContent.push(tags[y].textContent);
-        } 
-    }
-    return tagsTextContent;
-}
-
-function getTagsAppliances() {
-    let tags = document.querySelectorAll(".list-appliances .item-selected");
-    tags = Array.from(tags);
-    let tagsTextContent = [];
-    for(let y = 0; y < tags.length; y++) {
-        if(tags[y].textContent !== "") {
-            tagsTextContent.push(tags[y].textContent);
-        } 
-    }
-    return tagsTextContent;
-}
-
-function getTagsUstensils() {
-    let tags = document.querySelectorAll(".list-ustensils .item-selected");
+function getTags() {
+    let tags = document.querySelectorAll(".item-selected");
     tags = Array.from(tags);
     let tagsTextContent = [];
     for(let y = 0; y < tags.length; y++) {
