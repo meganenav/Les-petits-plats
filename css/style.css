@@ -53,6 +53,7 @@ header img {
     font-size: 1em;
     color: #7A7A7A;
     border: none;
+    outline: none;
 }
 
 .search-icon-block {
@@ -146,7 +147,7 @@ main {
 }
 
 .filter-list ul {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 170px;
 }
 
