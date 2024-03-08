@@ -103,7 +103,7 @@ function listenElementsFilter(listElementsUl, type) {
     for(let i = 0; i < listElements.length; i++) {
         listElements[i].addEventListener("click", () => {
             filterByTag(listElements[i], type);
-            removeElementToSelected(listElements[i].textContent, listElementsUl);
+            removeElementToSelected(listElements[i].textContent, listElementsUl, type);
             searchRecipes();
             createArrayList(type);
             closeElementsFilter(type);

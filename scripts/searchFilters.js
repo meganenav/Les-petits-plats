@@ -32,13 +32,42 @@ function closeTag(tagCloseImg, type) {
     createArrayList(type);
 }
 
-function removeElementToSelected(element, ulElements) {
+function removeElementToSelected(element, ulElements, type) {
     let liElements = "." + ulElements.className + " li";
     liElements = document.querySelectorAll(liElements);
     const spanLiElements = document.createElement("span");
     spanLiElements.classList.add("item-selected");
     spanLiElements.textContent = element;
+    const imgClose = document.createElement("img");
+    imgClose.setAttribute("src", "assets/close-selected-element.svg");
+    spanLiElements.appendChild(imgClose);
     ulElements.parentElement.insertBefore(spanLiElements, ulElements);
+    const img = document.querySelectorAll(".item-selected img");
+    spanLiElements.addEventListener("mouseover", () => {
+        const img = spanLiElements.querySelector("img");
+        img.style.display = "flex";
+    });
+    spanLiElements.addEventListener("mouseout", () => {
+        const img = spanLiElements.querySelector("img");
+        img.style.display = "none";
+    });
+    for(let i = 0; i < img.length; i++) {
+        img[i].addEventListener("click", () => {
+            closeSelectedElement(img[i].parentElement, type);
+        });
+    }
+}
+
+function closeSelectedElement(element, type) {
+    const tags = document.querySelectorAll(".tag-span");
+    for(let i = 0; i < tags.length; i++) {
+        if(tags[i].textContent === element.textContent) {
+            tags[i].remove();
+            element.remove();
+            searchRecipes();
+            createArrayList(type);
+        }
+    }
 }
 
 function createArrayList(type) {

@@ -197,12 +197,23 @@ main {
     background-color: #FFD15B;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 210px;
     height: 37px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     position: relative;
     left: -15px;
     padding-left: 15px;
+}
+
+.item-selected:hover {
+    font-weight: 700;
+}
+
+.item-selected img {
+    margin-right: 10px;
+    display: none;
+    cursor: pointer;
 }
 
 .recipes {
