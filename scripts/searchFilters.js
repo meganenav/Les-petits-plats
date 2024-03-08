@@ -3,7 +3,7 @@ function filterByTag(element, type) {
     const tagCloseImg = document.querySelectorAll(".tag-close-img");
     for(let i = 0; i < tagCloseImg.length; i++) {
         tagCloseImg[i].addEventListener("click", () => {
-            closeTag(tagCloseImg[i]);
+            closeTag(tagCloseImg[i], type);
         });
     }
 }
@@ -18,10 +18,9 @@ function createTagSpan(element, type) {
     imgCloseTag.classList.add("tag-close-img");
     tagSpan.appendChild(imgCloseTag);
     tagsDiv.appendChild(tagSpan);
-    addTag(element, type);
 }
 
-function closeTag(tagCloseImg) {
+function closeTag(tagCloseImg, type) {
     const selected = document.querySelectorAll(".item-selected");
     for(let i = 0; i < selected.length; i++) {
         if(tagCloseImg.parentElement.textContent === selected[i].textContent) {
@@ -30,42 +29,55 @@ function closeTag(tagCloseImg) {
     }
     tagCloseImg.parentElement.remove();
     searchRecipes();
+    createArrayList(type);
 }
 
-function addTag(element, type) {
+function removeElementToSelected(element, ulElements) {
+    let liElements = "." + ulElements.className + " li";
+    liElements = document.querySelectorAll(liElements);
+    const spanLiElements = document.createElement("span");
+    spanLiElements.classList.add("item-selected");
+    spanLiElements.textContent = element;
+    ulElements.parentElement.insertBefore(spanLiElements, ulElements);
+}
+
+function createArrayList(type) {
+    let listElementsUl;
+    let liElements;
+    let selected;
     if(type === "ingredients") {
-        let liIngredients = document.querySelectorAll(".ul-ingredients li");
-        liIngredients = Array.from(liIngredients);
-        const ulElements = document.querySelector(".ul-ingredients");
-        const listElements = document.querySelector(".list-ingredients");
-        removeElementToSelected(element, liIngredients, listElements, ulElements);
+        listElementsUl = document.querySelector(".ul-ingredients");
+        liElements = ".ul-ingredients li";
+        selected = ".list-ingredients .item-selected";
     }
     if(type === "appliances") {
-        let liAppliances = document.querySelectorAll(".ul-appliances li");
-        liAppliances = Array.from(liAppliances);
-        const ulElements = document.querySelector(".ul-appliances");
-        const listElements = document.querySelector(".list-appliances");
-        removeElementToSelected(element, liAppliances, listElements, ulElements);
+        listElementsUl = document.querySelector(".ul-appliances");
+        liElements = ".ul-appliances li";
+        selected = ".list-appliances .item-selected";
     }
     if(type === "ustensils") {
-        let liUstensils = document.querySelectorAll(".ul-ustensils li");
-        liUstensils = Array.from(liUstensils);
-        const ulElements = document.querySelector(".ul-ustensils");
-        const listElements = document.querySelector(".list-ustensils");
-        removeElementToSelected(element, liUstensils, listElements, ulElements);
+        listElementsUl = document.querySelector(".ul-ustensils");
+        liElements = ".ul-ustensils li";
+        selected = ".list-ustensils .item-selected";
     }
-}
-
-function removeElementToSelected(element, liElements, listElements, ulElements) {
+    liElements = document.querySelectorAll(liElements);
+    selected = document.querySelectorAll(selected);
+    let arrayElements = [];
+    let insertElement;
     for(let i = 0; i < liElements.length; i++) {
-        if(element === liElements[i].textContent) {
-            liElements[i].remove();
-            const spanLiElements = document.createElement("span");
-            spanLiElements.classList.add("item-selected");
-            spanLiElements.textContent = liElements[i].textContent;
-            listElements.insertBefore(spanLiElements, ulElements);
+        insertElement = true;
+        for(let y = 0; y < selected.length; y++) {
+            if(liElements[i].textContent !== selected[y].textContent) {
+            }
+            else {
+                insertElement = false;
+            }
+        }
+        if(insertElement === true) {
+            arrayElements.push(liElements[i].textContent);
         }
     }
+    displayElementsFilter(listElementsUl, arrayElements, type)
 }
 
 function getTags() {

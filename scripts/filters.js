@@ -103,7 +103,9 @@ function listenElementsFilter(listElementsUl, type) {
     for(let i = 0; i < listElements.length; i++) {
         listElements[i].addEventListener("click", () => {
             filterByTag(listElements[i], type);
+            removeElementToSelected(listElements[i].textContent, listElementsUl);
             searchRecipes();
+            createArrayList(type);
             closeElementsFilter(type);
         });
     }

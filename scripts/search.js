@@ -24,7 +24,6 @@ function searchRecipes() {
         recipesArray = searchInputFunction(searchInput, recipesArray);
     }
     let tagsElements = getTags();
-    console.log(tagsElements);
     if(tagsElements.length !== 0) {
         newRecipesArray = searchElementTags(tagsElements, recipesArray);
     }
