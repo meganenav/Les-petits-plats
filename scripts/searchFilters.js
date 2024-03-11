@@ -106,7 +106,7 @@ function createArrayList(type) {
             arrayElements.push(liElements[i].textContent);
         }
     }
-    displayElementsFilter(listElementsUl, arrayElements, type)
+    displayElementsFilter(listElementsUl, arrayElements, type);
 }
 
 function getTags() {
@@ -119,4 +119,32 @@ function getTags() {
         } 
     }
     return tagsTextContent;
+}
+
+function searchElementsList(listElementsUl, arrayElements, type) {
+    let searchInput;
+    if(type === "ingredients") {
+        searchInput = document.querySelector(".search-ingredients");
+    }
+    if(type === "appliances") {
+        searchInput = document.querySelector(".search-appliances");
+    }
+    if(type === "ustensils") {
+        searchInput = document.querySelector(".search-ustensils");
+    }
+    let arrayList = [];
+    searchInput.addEventListener("input", () => {
+        for(let i = 0; i < arrayElements.length; i++) {
+            if(arrayElements[i].search(searchInput.value) === 0) {
+                arrayList.push(arrayElements[i]);
+            }
+        }
+        listElementsUl.innerHTML = "";
+        for(let i = 0; i < arrayList.length; i++) {
+            const li = document.createElement("li");
+            li.textContent = arrayList[i];
+            listElementsUl.appendChild(li);
+        }
+        arrayList = [];
+    });
 }

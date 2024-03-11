@@ -4,7 +4,7 @@ const arrowUstensils = document.querySelector(".arrow-ustensils");
 arrowIngredients.addEventListener("click", () => {
     const listIngredients = document.querySelector(".list-ingredients");
     if(listIngredients.classList.contains("ingredients-open")) {
-        closeElementsFilter("ingredients");
+        closeElementsFilter("ingredients", listIngredients);
     }
     else {
         showElementsFilter("ingredients");
@@ -69,6 +69,7 @@ function prepareAppliancesFilter(recipesArray) {
     }
     appliancesArray = getUniqueElements(appliancesArray);
     const listAppliances = document.querySelector(".list-appliances ul");
+    searchElementsList(listAppliances, appliancesArray, "appliances");
     displayElementsFilter(listAppliances, appliancesArray, "appliances", recipesArray);
 }
 
@@ -84,10 +85,21 @@ function prepareUstensilsFilter(recipesArray) {
     }
     ustensilsArray = getUniqueElements(ustensilsArray);
     const listUstensils = document.querySelector(".list-ustensils ul");
+    searchElementsList(listUstensils, ustensilsArray, "ustensils");
     displayElementsFilter(listUstensils, ustensilsArray, "ustensils");
 }
 
 function displayElementsFilter(listElementsUl, elementsArray, type) {
+    let searchInput;
+    if(type === "ingredients") {
+        searchInput = document.querySelector(".search-ingredients");
+    }
+    if(type === "appliances") {
+        searchInput = document.querySelector(".search-appliances");
+    }
+    if(type === "ustensils") {
+        searchInput = document.querySelector(".search-ustensils");
+    }
     listElementsUl.innerHTML = "";
     for(let i = 0; i < elementsArray.length; i++) {
         const li = document.createElement("li");
@@ -95,6 +107,22 @@ function displayElementsFilter(listElementsUl, elementsArray, type) {
         listElementsUl.appendChild(li);
     }
     listenElementsFilter(listElementsUl, type);
+    let arrayList = [];
+    searchInput.addEventListener("input", () => {
+        listElementsUl.innerHTML = "";
+        arrayList = [];
+        for(let i = 0; i < elementsArray.length; i++) {
+            if(elementsArray[i].search(searchInput.value) === 0) {
+                arrayList.push(elementsArray[i]);
+            }
+        }
+        for(let i = 0; i < arrayList.length; i++) {
+            const li = document.createElement("li");
+            li.textContent = arrayList[i];
+            listElementsUl.appendChild(li);
+        }
+        listenElementsFilter(listElementsUl, type);
+    });
 }
 
 function listenElementsFilter(listElementsUl, type) {
@@ -134,25 +162,39 @@ function showElementsFilter(element) {
     arrow.setAttribute("src", "assets/arrow-reverse.svg");
 }
 
-function closeElementsFilter(element) {
+function closeElementsFilter(type) {
     let arrow;
-    if(element === "ingredients") {
+    let ul;
+    if(type === "ingredients") {
         arrow = document.querySelector(".arrow-ingredients");
         const listIngredients = document.querySelector(".list-ingredients");
         listIngredients.style.display = "none";
         listIngredients.classList.remove("ingredients-open");
+        document.querySelector(".search-ingredients").parentElement.reset();
+        ul = document.querySelector(".ul-ingredients");
     }
-    if(element === "appliances") {
+    if(type === "appliances") {
         arrow = document.querySelector(".arrow-appliances");
         const listAppliances = document.querySelector(".list-appliances");
         listAppliances.style.display = "none";
         listAppliances.classList.remove("appliances-open");
+        document.querySelector(".search-appliances").parentElement.reset();
+        ul = document.querySelector(".ul-appliances");
     }
-    if(element === "ustensils") {
+    if(type === "ustensils") {
         arrow = document.querySelector(".arrow-ustensils");
         const listUstensils = document.querySelector(".list-ustensils");
         listUstensils.style.display = "none";
         listUstensils.classList.remove("ustensils-open");
+        document.querySelector(".search-ustensils").parentElement.reset();
+         ul = document.querySelector(".ul-ustensils");
+    }
+    let elementsArray = ul.children;
+    elementsArray = Array.from(elementsArray);
+    let arrayList = [];
+    for(let i = 0; i < elementsArray.length; i++) {
+        arrayList.push(elementsArray[i].textContent);
     }
     arrow.setAttribute("src", "assets/arrow.svg");
+    displayElementsFilter(ul, arrayList, type);
 }

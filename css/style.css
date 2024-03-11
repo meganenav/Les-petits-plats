@@ -129,6 +129,7 @@ main {
 .search-filter {
     width: 160px;
     border: none;
+    outline: none;
 }
 
 .search-filter-img{
