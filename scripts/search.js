@@ -37,6 +37,7 @@ function searchRecipes() {
         document.querySelector(".recipes").innerHTML = "";
         document.querySelector(".recipes").style.display = "grid";
         createNewRecipes(newRecipesArray);
+        currentRecipesArray = newRecipesArray;
     }
     else {
         document.querySelector(".recipes").style.display = "flex";

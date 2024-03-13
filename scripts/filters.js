@@ -1,36 +1,36 @@
 //Mise en place des flèches sur les blocks de filtres, ajout d'un écouteur d'événement
-const arrowIngredients = document.querySelector(".arrow-ingredients");
-const arrowAppliances = document.querySelector(".arrow-appliances");
-const arrowUstensils = document.querySelector(".arrow-ustensils");
-arrowIngredients.addEventListener("click", () => {
-    const listIngredients = document.querySelector(".list-ingredients");
-    if(listIngredients.classList.contains("ingredients-open")) {
-        let elementsIngredients = document.querySelector(".ul-ingredients").children;
-        elementsIngredients = Array.from(elementsIngredients);
-        closeElementsFilter("ingredients");
-    }
-    else {
-        showElementsFilter("ingredients");
-    }
-});
-arrowAppliances.addEventListener("click", () => {
-    const listAppliances = document.querySelector(".list-appliances");
-    if(listAppliances.classList.contains("appliances-open")) {
-        closeElementsFilter("appliances");
-    }
-    else {
-        showElementsFilter("appliances");
-    }
-});
-arrowUstensils.addEventListener("click", () => {
-    const listUstensils = document.querySelector(".list-ustensils");
-    if(listUstensils.classList.contains("ustensils-open")) {
-        closeElementsFilter("ustensils");
-    }
-    else {
-        showElementsFilter("ustensils");
-    }
-});
+function manageDisplayFilters() {
+    const arrowIngredients = document.querySelector(".arrow-ingredients");
+    const arrowAppliances = document.querySelector(".arrow-appliances");
+    const arrowUstensils = document.querySelector(".arrow-ustensils");
+    arrowIngredients.addEventListener("click", () => {
+        const listIngredients = document.querySelector(".list-ingredients");
+        if(listIngredients.classList.contains("ingredients-open")) {
+            closeElementsFilter("ingredients");
+        }
+        else {
+            showElementsFilter("ingredients");
+        }
+    });
+    arrowAppliances.addEventListener("click", () => {
+        const listAppliances = document.querySelector(".list-appliances");
+        if(listAppliances.classList.contains("appliances-open")) {
+            closeElementsFilter("appliances");
+        }
+        else {
+            showElementsFilter("appliances");
+        }
+    });
+    arrowUstensils.addEventListener("click", () => {
+        const listUstensils = document.querySelector(".list-ustensils");
+        if(listUstensils.classList.contains("ustensils-open")) {
+            closeElementsFilter("ustensils");
+        }
+        else {
+            showElementsFilter("ustensils");
+        }
+    });
+}
 
 //Affichage de la liste déroulante
 function showElementsFilter(element) {
@@ -62,12 +62,14 @@ function closeElementsFilter(type) {
     let arrow;
     let listElement;
     let classElement;
+    let search;
     let formElement;
     let ul;
     if(type === "ingredients") {
         arrow = document.querySelector(".arrow-ingredients");
         listElement = document.querySelector(".list-ingredients");
         classElement = "ingredients-open";
+        search = document.querySelector(".search-ingredients");
         formElement =  document.querySelector(".search-ingredients").parentElement;
         ul = document.querySelector(".ul-ingredients");
     }
@@ -87,6 +89,12 @@ function closeElementsFilter(type) {
     }
     listElement.style.display = "none";
     listElement.classList.remove(classElement);
+    if(search.value.length !== 0) {
+        if(currentRecipesArray.length === 0) {
+            currentRecipesArray = recipes;
+        }
+        fillFilters(currentRecipesArray);
+    }
     formElement.reset();
     arrow.setAttribute("src", "assets/arrow.svg");
 }
@@ -241,6 +249,7 @@ function listenElementsFilter(listElementsUl, type) {
         listElements[i].addEventListener("click", () => {
             filterByTag(listElements[i], type);
             removeElementToSelected(listElements[i].textContent, listElementsUl, type);
+            closeElementsFilter(type);
             searchRecipes();
         });
     }
