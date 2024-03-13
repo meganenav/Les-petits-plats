@@ -1,3 +1,17 @@
+//Récupération des tags affichés
+function getTags() {
+    let tags = document.querySelectorAll(".item-selected");
+    tags = Array.from(tags);
+    let tagsTextContent = [];
+    for(let y = 0; y < tags.length; y++) {
+        if(tags[y].textContent !== "") {
+            tagsTextContent.push(tags[y].textContent);
+        } 
+    }
+    return tagsTextContent;
+}
+
+//Appel à la création du tag avec écouteur d'événement pour fermer le tag si besoin
 function filterByTag(element, type) {
     createTagSpan(element.textContent, type);
     const tagCloseImg = document.querySelectorAll(".tag-close-img");
@@ -8,7 +22,8 @@ function filterByTag(element, type) {
     }
 }
 
-function createTagSpan(element, type) {
+//Création de la span du tag
+function createTagSpan(element) {
     const tagsDiv = document.querySelector(".tags");
     const tagSpan = document.createElement("span");
     tagSpan.classList.add("tag-span");
@@ -20,6 +35,7 @@ function createTagSpan(element, type) {
     tagsDiv.appendChild(tagSpan);
 }
 
+//Fermeture du tag avec remise en ordre des recettes et des listes de filtres
 function closeTag(tagCloseImg, type) {
     const selected = document.querySelectorAll(".item-selected");
     for(let i = 0; i < selected.length; i++) {
@@ -29,9 +45,9 @@ function closeTag(tagCloseImg, type) {
     }
     tagCloseImg.parentElement.remove();
     searchRecipes();
-    createArrayList(type);
 }
 
+//Suppression de la liste déroulante de l'élément sélectionné dans la liste
 function removeElementToSelected(element, ulElements, type) {
     let liElements = "." + ulElements.className + " li";
     liElements = document.querySelectorAll(liElements);
@@ -58,6 +74,7 @@ function removeElementToSelected(element, ulElements, type) {
     }
 }
 
+//Fermeture de l'élément sélectionné dans la liste déroulante
 function closeSelectedElement(element, type) {
     const tags = document.querySelectorAll(".tag-span");
     for(let i = 0; i < tags.length; i++) {
@@ -65,86 +82,6 @@ function closeSelectedElement(element, type) {
             tags[i].remove();
             element.remove();
             searchRecipes();
-            createArrayList(type);
         }
     }
-}
-
-function createArrayList(type) {
-    let listElementsUl;
-    let liElements;
-    let selected;
-    if(type === "ingredients") {
-        listElementsUl = document.querySelector(".ul-ingredients");
-        liElements = ".ul-ingredients li";
-        selected = ".list-ingredients .item-selected";
-    }
-    if(type === "appliances") {
-        listElementsUl = document.querySelector(".ul-appliances");
-        liElements = ".ul-appliances li";
-        selected = ".list-appliances .item-selected";
-    }
-    if(type === "ustensils") {
-        listElementsUl = document.querySelector(".ul-ustensils");
-        liElements = ".ul-ustensils li";
-        selected = ".list-ustensils .item-selected";
-    }
-    liElements = document.querySelectorAll(liElements);
-    selected = document.querySelectorAll(selected);
-    let arrayElements = [];
-    let insertElement;
-    for(let i = 0; i < liElements.length; i++) {
-        insertElement = true;
-        for(let y = 0; y < selected.length; y++) {
-            if(liElements[i].textContent !== selected[y].textContent) {
-            }
-            else {
-                insertElement = false;
-            }
-        }
-        if(insertElement === true) {
-            arrayElements.push(liElements[i].textContent);
-        }
-    }
-    displayElementsFilter(listElementsUl, arrayElements, type);
-}
-
-function getTags() {
-    let tags = document.querySelectorAll(".item-selected");
-    tags = Array.from(tags);
-    let tagsTextContent = [];
-    for(let y = 0; y < tags.length; y++) {
-        if(tags[y].textContent !== "") {
-            tagsTextContent.push(tags[y].textContent);
-        } 
-    }
-    return tagsTextContent;
-}
-
-function searchElementsList(listElementsUl, arrayElements, type) {
-    let searchInput;
-    if(type === "ingredients") {
-        searchInput = document.querySelector(".search-ingredients");
-    }
-    if(type === "appliances") {
-        searchInput = document.querySelector(".search-appliances");
-    }
-    if(type === "ustensils") {
-        searchInput = document.querySelector(".search-ustensils");
-    }
-    let arrayList = [];
-    searchInput.addEventListener("input", () => {
-        for(let i = 0; i < arrayElements.length; i++) {
-            if(arrayElements[i].search(searchInput.value) === 0) {
-                arrayList.push(arrayElements[i]);
-            }
-        }
-        listElementsUl.innerHTML = "";
-        for(let i = 0; i < arrayList.length; i++) {
-            const li = document.createElement("li");
-            li.textContent = arrayList[i];
-            listElementsUl.appendChild(li);
-        }
-        arrayList = [];
-    });
 }

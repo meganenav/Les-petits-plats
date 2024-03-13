@@ -1,10 +1,13 @@
+//Mise en place des flèches sur les blocks de filtres, ajout d'un écouteur d'événement
 const arrowIngredients = document.querySelector(".arrow-ingredients");
 const arrowAppliances = document.querySelector(".arrow-appliances");
 const arrowUstensils = document.querySelector(".arrow-ustensils");
 arrowIngredients.addEventListener("click", () => {
     const listIngredients = document.querySelector(".list-ingredients");
     if(listIngredients.classList.contains("ingredients-open")) {
-        closeElementsFilter("ingredients", listIngredients);
+        let elementsIngredients = document.querySelector(".ul-ingredients").children;
+        elementsIngredients = Array.from(elementsIngredients);
+        closeElementsFilter("ingredients");
     }
     else {
         showElementsFilter("ingredients");
@@ -29,6 +32,66 @@ arrowUstensils.addEventListener("click", () => {
     }
 });
 
+//Affichage de la liste déroulante
+function showElementsFilter(element) {
+    let arrow;
+    let listElement;
+    let classElement;
+    if(element === "ingredients") {
+        arrow = document.querySelector(".arrow-ingredients");
+        listElement = document.querySelector(".list-ingredients");
+        classElement = "ingredients-open";
+    }
+    if(element === "appliances") {
+        arrow = document.querySelector(".arrow-appliances");
+        listElement = document.querySelector(".list-appliances");
+        classElement = "appliances-open";
+    }
+    if(element === "ustensils") {
+        arrow = document.querySelector(".arrow-ustensils");
+        listElement = document.querySelector(".list-ustensils");
+        classElement = "ustensils-open";
+    }
+    listElement.style.display = "block";
+    listElement.classList.add(classElement);
+    arrow.setAttribute("src", "assets/arrow-reverse.svg");
+}
+
+//Fermeture de la liste déroulante avec reset du champ de recherche et de l'affichage des éléments de filtre
+function closeElementsFilter(type) {
+    let arrow;
+    let listElement;
+    let classElement;
+    let formElement;
+    let ul;
+    if(type === "ingredients") {
+        arrow = document.querySelector(".arrow-ingredients");
+        listElement = document.querySelector(".list-ingredients");
+        classElement = "ingredients-open";
+        formElement =  document.querySelector(".search-ingredients").parentElement;
+        ul = document.querySelector(".ul-ingredients");
+    }
+    if(type === "appliances") {
+        arrow = document.querySelector(".arrow-appliances");
+        listElement = document.querySelector(".list-appliances");
+        classElement = "appliances-open";
+        formElement = document.querySelector(".search-appliances").parentElement;
+        ul = document.querySelector(".ul-appliances");
+    }
+    if(type === "ustensils") {
+        arrow = document.querySelector(".arrow-ustensils");
+        listElement = document.querySelector(".list-ustensils");
+        classElement = "ustensils-open";
+        formElement = document.querySelector(".search-ustensils").parentElement;
+        ul = document.querySelector(".ul-ustensils");
+    }
+    listElement.style.display = "none";
+    listElement.classList.remove(classElement);
+    formElement.reset();
+    arrow.setAttribute("src", "assets/arrow.svg");
+}
+
+//Renvoie un tableau sans doublon des éléments
 function getUniqueElements(elementsArray) {
     let newArray = [];
     for(let i = 0; i < elementsArray.length; i++) {
@@ -39,12 +102,14 @@ function getUniqueElements(elementsArray) {
     return newArray;
 }
 
+//Remplissage des filtres avec les fonctions dédiées
 function fillFilters(recipesArray) {
     prepareIngredientsFilter(recipesArray);
     prepareUstensilsFilter(recipesArray);
     prepareAppliancesFilter(recipesArray);
 }
 
+//Création d'un tableau d'ingrédients en fonction des recettes en paramètre
 function prepareIngredientsFilter(recipesArray) {
     let ingredientsArray = [];
     for(let i = 0; i < recipesArray.length; i++) {
@@ -56,10 +121,25 @@ function prepareIngredientsFilter(recipesArray) {
         }
     }
     ingredientsArray = getUniqueElements(ingredientsArray);
+    const selected = document.querySelectorAll(".list-ingredients .item-selected");
+    let newIngredientsArray = [];
+    let insertElement;
+    for(let i = 0; i < ingredientsArray.length; i++) {
+        insertElement = true;
+        for(let y = 0; y < selected.length; y++) {
+            if(ingredientsArray[i] === selected[y].textContent) {
+                insertElement = false;
+            }
+        }
+        if(insertElement === true) {
+            newIngredientsArray.push(ingredientsArray[i]);
+        }
+    }
     const listIngredients = document.querySelector(".list-ingredients ul");
-    displayElementsFilter(listIngredients, ingredientsArray, "ingredients", recipesArray);
+    displayElementsFilter(listIngredients, newIngredientsArray, "ingredients", recipesArray);
 }
 
+//Création d'un tableau d'appareils en fonction des recettes en paramètre
 function prepareAppliancesFilter(recipesArray) {
     let appliancesArray = [];
     for(let i = 0; i < recipesArray.length; i++) {
@@ -68,11 +148,25 @@ function prepareAppliancesFilter(recipesArray) {
         appliancesArray.push(appliance);
     }
     appliancesArray = getUniqueElements(appliancesArray);
+    const selected = document.querySelectorAll(".list-appliances .item-selected");
+    let newAppliancesArray = [];
+    let insertElement;
+    for(let i = 0; i < appliancesArray.length; i++) {
+        insertElement = true;
+        for(let y = 0; y < selected.length; y++) {
+            if(appliancesArray[i] === selected[y].textContent) {
+                insertElement = false;
+            }
+        }
+        if(insertElement === true) {
+            newAppliancesArray.push(appliancesArray[i]);
+        }
+    }
     const listAppliances = document.querySelector(".list-appliances ul");
-    searchElementsList(listAppliances, appliancesArray, "appliances");
-    displayElementsFilter(listAppliances, appliancesArray, "appliances", recipesArray);
+    displayElementsFilter(listAppliances, newAppliancesArray, "appliances", recipesArray);
 }
 
+//Création d'un tableau d'ustensiles en fonction des recettes en paramètre
 function prepareUstensilsFilter(recipesArray) {
     let ustensilsArray = [];
     for(let i = 0; i < recipesArray.length; i++) {
@@ -84,11 +178,25 @@ function prepareUstensilsFilter(recipesArray) {
         }
     }
     ustensilsArray = getUniqueElements(ustensilsArray);
+    const selected = document.querySelectorAll(".list-ustensils .item-selected");
+    let newUstensilsArray = [];
+    let insertElement;
+    for(let i = 0; i < ustensilsArray.length; i++) {
+        insertElement = true;
+        for(let y = 0; y < selected.length; y++) {
+            if(ustensilsArray[i] === selected[y].textContent) {
+                insertElement = false;
+            }
+        }
+        if(insertElement === true) {
+            newUstensilsArray.push(ustensilsArray[i]);
+        }
+    }
     const listUstensils = document.querySelector(".list-ustensils ul");
-    searchElementsList(listUstensils, ustensilsArray, "ustensils");
-    displayElementsFilter(listUstensils, ustensilsArray, "ustensils");
+    displayElementsFilter(listUstensils, newUstensilsArray, "ustensils");
 }
 
+//Affichage des éléments du tableau dans les listes déroulantes avec prise en compte du champ de recherche des filtres
 function displayElementsFilter(listElementsUl, elementsArray, type) {
     let searchInput;
     if(type === "ingredients") {
@@ -112,7 +220,7 @@ function displayElementsFilter(listElementsUl, elementsArray, type) {
         listElementsUl.innerHTML = "";
         arrayList = [];
         for(let i = 0; i < elementsArray.length; i++) {
-            if(elementsArray[i].search(searchInput.value) === 0) {
+            if(elementsArray[i].search(searchInput.value) !== -1) {
                 arrayList.push(elementsArray[i]);
             }
         }
@@ -125,6 +233,7 @@ function displayElementsFilter(listElementsUl, elementsArray, type) {
     });
 }
 
+//Ecoute des éléments des filtres afin de lancer les fonctions concernées
 function listenElementsFilter(listElementsUl, type) {
     let listElements = listElementsUl.children;
     listElements = Array.from(listElements);
@@ -133,68 +242,6 @@ function listenElementsFilter(listElementsUl, type) {
             filterByTag(listElements[i], type);
             removeElementToSelected(listElements[i].textContent, listElementsUl, type);
             searchRecipes();
-            createArrayList(type);
-            closeElementsFilter(type);
         });
     }
-}
-
-function showElementsFilter(element) {
-    let arrow;
-    if(element === "ingredients") {
-        arrow = document.querySelector(".arrow-ingredients");
-        const listIngredients = document.querySelector(".list-ingredients");
-        listIngredients.style.display = "block";
-        listIngredients.classList.add("ingredients-open");
-    }
-    if(element === "appliances") {
-        arrow = document.querySelector(".arrow-appliances");
-        const listAppliances = document.querySelector(".list-appliances");
-        listAppliances.style.display = "block";
-        listAppliances.classList.add("appliances-open");
-    }
-    if(element === "ustensils") {
-        arrow = document.querySelector(".arrow-ustensils");
-        const listUstensils = document.querySelector(".list-ustensils");
-        listUstensils.style.display = "block";
-        listUstensils.classList.add("ustensils-open");
-    }
-    arrow.setAttribute("src", "assets/arrow-reverse.svg");
-}
-
-function closeElementsFilter(type) {
-    let arrow;
-    let ul;
-    if(type === "ingredients") {
-        arrow = document.querySelector(".arrow-ingredients");
-        const listIngredients = document.querySelector(".list-ingredients");
-        listIngredients.style.display = "none";
-        listIngredients.classList.remove("ingredients-open");
-        document.querySelector(".search-ingredients").parentElement.reset();
-        ul = document.querySelector(".ul-ingredients");
-    }
-    if(type === "appliances") {
-        arrow = document.querySelector(".arrow-appliances");
-        const listAppliances = document.querySelector(".list-appliances");
-        listAppliances.style.display = "none";
-        listAppliances.classList.remove("appliances-open");
-        document.querySelector(".search-appliances").parentElement.reset();
-        ul = document.querySelector(".ul-appliances");
-    }
-    if(type === "ustensils") {
-        arrow = document.querySelector(".arrow-ustensils");
-        const listUstensils = document.querySelector(".list-ustensils");
-        listUstensils.style.display = "none";
-        listUstensils.classList.remove("ustensils-open");
-        document.querySelector(".search-ustensils").parentElement.reset();
-         ul = document.querySelector(".ul-ustensils");
-    }
-    let elementsArray = ul.children;
-    elementsArray = Array.from(elementsArray);
-    let arrayList = [];
-    for(let i = 0; i < elementsArray.length; i++) {
-        arrayList.push(elementsArray[i].textContent);
-    }
-    arrow.setAttribute("src", "assets/arrow.svg");
-    displayElementsFilter(ul, arrayList, type);
 }

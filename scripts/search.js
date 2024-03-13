@@ -1,8 +1,10 @@
+//Récupération du contenu du champ de recherche principal
 const searchInput = document.querySelector(".search-input");
 searchInput.addEventListener("input", () => {
     searchInputValue(searchInput, "input");
 });
 
+//Traitement du champ de recherche principal, affichage des recettes filtrées ou non
 function searchInputValue(searchInput) {
     let recipesArray = recipes;
     if(searchInput.value.length >= 3) {
@@ -17,6 +19,7 @@ function searchInputValue(searchInput) {
     }
 }
 
+//Recherche des recettes en fonction du champ de recherche éventuellement et/ou des tags
 function searchRecipes() {
     let newRecipesArray = [];
     let recipesArray = recipes;
@@ -44,6 +47,7 @@ function searchRecipes() {
     }
 }
 
+//Vérification des recettes avec le champ de recherche, dans le nom, la description et les ingrédients
 function searchInputFunction(element, recipesArray) {
     let newRecipesArray = [];
     letters = element.value.toLowerCase();
@@ -58,6 +62,7 @@ function searchInputFunction(element, recipesArray) {
     return newRecipesArray;
 }
 
+//Vérification des recettes avec les tags dans les ingrédients, ustensiles et appareils
 function searchElementTags(tagsElements, recipesArray) {
     let newRecipesArray = [];
     for(let i = 0; i < recipesArray.length; i++) {
@@ -78,18 +83,21 @@ function searchElementTags(tagsElements, recipesArray) {
     return newRecipesArray;
 }
 
+//Compare les lettres ou mots passés en paramètres et le nom de la recette
 function verificationName(letters, recipe) {
     const recipeNameLowerCase = recipe["name"].toLowerCase();
     const verifName = (recipeNameLowerCase.search(letters) !== -1);
     return verifName;
 }
 
+//Compare les lettres ou mots passés en paramètres et la description de la recette
 function verificationDescription(letters, recipe) {
     const descriptionLowerCase = recipe["description"].toLowerCase();
     const verifDescription = (descriptionLowerCase.search(letters) !== -1);
     return verifDescription;
 }
 
+//Compare les lettres ou mots passés en paramètres et les ingrédients de la recette
 function verificationIngredients(letters, recipe) {
     const ingredientsArray = recipe["ingredients"];
     let verifIngredients = false;     
@@ -103,12 +111,14 @@ function verificationIngredients(letters, recipe) {
     return verifIngredients;
 }
 
+//Compare les lettres ou mots passés en paramètres et l'appareil de la recette
 function verificationAppliances(letters, recipe) {
     const applianceLowerCase = recipe["appliance"].toLowerCase();
     const verifAppliance = (applianceLowerCase.search(letters) !== -1);
     return verifAppliance;
 }
 
+//Compare les lettres ou mots passés en paramètres et les ustensiles de la recette
 function verificationUstensils(letters, recipe) {
     const ustensilsArray = recipe["ustensils"];
     let verifUstensil = false;     
@@ -122,6 +132,7 @@ function verificationUstensils(letters, recipe) {
     return verifUstensil;
 }
 
+//Création des recettes en fonction d'un tableau de recettes avec remplissage des filtres
 function createNewRecipes(recipesArray) {
     document.querySelector(".recipes").innerHTML = "";
     for(let i = 0; i < recipesArray.length; i++) {

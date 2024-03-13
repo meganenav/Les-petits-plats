@@ -1,3 +1,4 @@
+//Fonction asynchrone d'initialisation qui crée les recettes et remplit les filtres
 async function init() {
     for(let i = 0; i < recipes.length; i++) {
         createRecipe(recipes[i]);
@@ -6,10 +7,12 @@ async function init() {
     document.querySelector(".nb-recipes span").textContent = recipes.length;
 }
 
+//Au chargement de la page, on lance init
 window.onload = () => {
     init();
 };
 
+//Création de chaque recette
 async function createRecipe(recipe) {
     const recipesSection = document.querySelector(".recipes");
     const article = document.createElement("article");
