@@ -122,6 +122,7 @@ main {
     height: 36px;
     border: 1px solid #C6C6C6;
     margin-bottom: 15px;
+    margin-left: 17px;
     display: flex;
     align-items: center;
 }
@@ -137,19 +138,24 @@ main {
     height: 14px;
 }
 
+.list {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .filter-list {
     display: none;
     background: white;
-    width: 195px;
-    padding: 0 16px 0 16px;
+    width: 227px;
+    padding-bottom: 10px;
     position: relative;
     z-index: 100;
     border-radius: 0 0 11px 11px;
 }
 
 .filter-list ul {
-    overflow-y: auto;
     max-height: 170px;
+    padding-left: 15px;
 }
 
 .filter-list li {
@@ -200,11 +206,10 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 210px;
+    width: 213px;
     height: 37px;
     margin-bottom: 5px;
     position: relative;
-    left: -15px;
     padding-left: 15px;
 }
 
@@ -213,9 +218,9 @@ main {
 }
 
 .item-selected img {
-    margin-right: 10px;
     display: none;
     cursor: pointer;
+    margin-right: 25px;
 }
 
 .recipes {
