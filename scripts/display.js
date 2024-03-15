@@ -2,9 +2,9 @@ let currentRecipesArray = [];
 
 //Fonction asynchrone d'initialisation qui crée les recettes et remplit les filtres
 async function init() {
-    for(let i = 0; i < recipes.length; i++) {
-        createRecipe(recipes[i]);
-    }
+    recipes.forEach(recipe => {
+        createRecipe(recipe);
+    });
     fillFilters(recipes);
     manageDisplayFilters();
     document.querySelector(".nb-recipes span").textContent = recipes.length;
@@ -51,22 +51,22 @@ async function createRecipe(recipe) {
     divRecipe.appendChild(divIngredients);
 
     const ingredientsArray = recipe["ingredients"];
-    for(let i = 0; i < ingredientsArray.length; i++) {
+    ingredientsArray.forEach(ingredient => {
         const liIngredients = document.createElement("li");
         const pIngredients = document.createElement("p");
         const pQuantity = document.createElement("p");
         pIngredients.classList.add("ingredients");
-        pIngredients.textContent = ingredientsArray[i]["ingredient"];
+        pIngredients.textContent = ingredient["ingredient"];
         pQuantity.classList.add("quantity");
-        if(ingredientsArray[i]["quantity"]) {
-            pQuantity.textContent = ingredientsArray[i]["quantity"];
+        if(ingredient["quantity"]) {
+            pQuantity.textContent = ingredient["quantity"];
         }
-        if(ingredientsArray[i]["unit"]) {
-            pQuantity.textContent += " " + ingredientsArray[i]["unit"];
+        if(ingredient["unit"]) {
+            pQuantity.textContent += " " + ingredient["unit"];
         }
         divIngredients.appendChild(ul);
         ul.appendChild(liIngredients);
         liIngredients.appendChild(pIngredients);
         liIngredients.appendChild(pQuantity);
-    }
+    });
 }

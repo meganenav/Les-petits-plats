@@ -136,9 +136,9 @@ function verificationUstensils(letters, recipe) {
 //Création des recettes en fonction d'un tableau de recettes avec remplissage des filtres
 function createNewRecipes(recipesArray) {
     document.querySelector(".recipes").innerHTML = "";
-    for(let i = 0; i < recipesArray.length; i++) {
-        createRecipe(recipesArray[i]);
-    }
+    recipesArray.forEach(recipe => {
+        createRecipe(recipe);
+    });
     fillFilters(recipesArray);
     document.querySelector(".nb-recipes span").textContent = recipesArray.length;
 }

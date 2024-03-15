@@ -15,11 +15,9 @@ function getTags() {
 function filterByTag(element, type) {
     createTagSpan(element.textContent, type);
     const tagCloseImg = document.querySelectorAll(".tag-close-img");
-    for(let i = 0; i < tagCloseImg.length; i++) {
-        tagCloseImg[i].addEventListener("click", () => {
-            closeTag(tagCloseImg[i], type);
-        });
-    }
+    tagCloseImg.forEach((tag) => tag.addEventListener("click", () => {
+        closeTag(tag, type);
+    }));
 }
 
 //Création de la span du tag
@@ -38,11 +36,11 @@ function createTagSpan(element) {
 //Fermeture du tag avec remise en ordre des recettes et des listes de filtres
 function closeTag(tagCloseImg, type) {
     const selected = document.querySelectorAll(".item-selected");
-    for(let i = 0; i < selected.length; i++) {
-        if(tagCloseImg.parentElement.textContent === selected[i].textContent) {
-            selected[i].remove();
+    selected.forEach(select => {
+        if(tagCloseImg.parentElement.textContent === select.textContent) {
+            select.remove();
         }
-    }
+    });
     tagCloseImg.parentElement.remove();
     searchRecipes();
 }
@@ -67,21 +65,21 @@ function removeElementToSelected(element, ulElements, type) {
         const img = spanLiElements.querySelector("img");
         img.style.display = "none";
     });
-    for(let i = 0; i < img.length; i++) {
-        img[i].addEventListener("click", () => {
-            closeSelectedElement(img[i].parentElement, type);
+    img.forEach(element => {
+        element.addEventListener("click", () => {
+            closeSelectedElement(element.parentElement, type);
         });
-    }
+    });
 }
 
 //Fermeture de l'élément sélectionné dans la liste déroulante
-function closeSelectedElement(element, type) {
+function closeSelectedElement(element) {
     const tags = document.querySelectorAll(".tag-span");
-    for(let i = 0; i < tags.length; i++) {
-        if(tags[i].textContent === element.textContent) {
-            tags[i].remove();
+    tags.forEach(tag => {
+        if(tag.textContent === element.textContent) {
+            tag.remove();
             element.remove();
             searchRecipes();
         }
-    }
+    });
 }

@@ -259,12 +259,10 @@ function displayElementsFilter(listElementsUl, elementsArray, type) {
 function listenElementsFilter(listElementsUl, type) {
     let listElements = listElementsUl.children;
     listElements = Array.from(listElements);
-    for(let i = 0; i < listElements.length; i++) {
-        listElements[i].addEventListener("click", () => {
-            filterByTag(listElements[i], type);
-            removeElementToSelected(listElements[i].textContent, listElementsUl, type);
-            closeElementsFilter(type);
-            searchRecipes();
-        });
-    }
+    listElements.forEach((element) => element.addEventListener("click", () => {
+        filterByTag(element, type);
+        removeElementToSelected(element.textContent, listElementsUl, type);
+        closeElementsFilter(type);
+        searchRecipes();
+    }));
 }
