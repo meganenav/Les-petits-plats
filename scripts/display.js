@@ -6,13 +6,13 @@ async function init() {
         createRecipe(recipe);
     });
     fillFilters(recipes);
-    manageDisplayFilters();
     document.querySelector(".nb-recipes span").textContent = recipes.length;
 }
 
 //Au chargement de la page, on lance init
 window.onload = () => {
     init();
+    manageDisplayFilters();
 };
 
 //Création de chaque recette

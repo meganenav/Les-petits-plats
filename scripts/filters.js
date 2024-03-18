@@ -71,7 +71,6 @@ function closeElementsFilter(type) {
     let filter;
     let search;
     let formElement;
-    let ul;
     if(type === "ingredients") {
         arrow = document.querySelector(".arrow-ingredients");
         listElement = document.querySelector(".list-ingredients");
@@ -116,11 +115,11 @@ function closeElementsFilter(type) {
 //Renvoie un tableau sans doublon des éléments
 function getUniqueElements(elementsArray) {
     let newArray = [];
-    for(let i = 0; i < elementsArray.length; i++) {
-        if(newArray.lastIndexOf(elementsArray[i]) === -1) {
-            newArray.push(elementsArray[i]);
+    elementsArray.forEach(element => {
+        if(newArray.lastIndexOf(element) === -1) {
+            newArray.push(element);
         }
-    }
+    });
     return newArray;
 }
 
@@ -134,29 +133,29 @@ function fillFilters(recipesArray) {
 //Création d'un tableau d'ingrédients en fonction des recettes en paramètre
 function prepareIngredientsFilter(recipesArray) {
     let ingredientsArray = [];
-    for(let i = 0; i < recipesArray.length; i++) {
-        let ingredients = recipesArray[i]["ingredients"];
-        for(let y = 0; y < ingredients.length; y++) {
-            let ingredient = ingredients[y]["ingredient"];
+    recipesArray.forEach(recipe => {
+        let ingredients = recipe["ingredients"];
+        ingredients.forEach(ingredient => {
+            ingredient = ingredient["ingredient"];
             ingredient = ingredient.toLowerCase();
             ingredientsArray.push(ingredient);
-        }
-    }
+        });
+    });
     ingredientsArray = getUniqueElements(ingredientsArray);
     const selected = document.querySelectorAll(".list-ingredients .item-selected");
     let newIngredientsArray = [];
     let insertElement;
-    for(let i = 0; i < ingredientsArray.length; i++) {
+    ingredientsArray.forEach(ingredient => {
         insertElement = true;
-        for(let y = 0; y < selected.length; y++) {
-            if(ingredientsArray[i] === selected[y].textContent) {
+        selected.forEach(element => {
+            if(ingredient === element.textContent) {
                 insertElement = false;
             }
-        }
+        });
         if(insertElement === true) {
-            newIngredientsArray.push(ingredientsArray[i]);
+            newIngredientsArray.push(ingredient);
         }
-    }
+    });
     const listIngredients = document.querySelector(".list-ingredients ul");
     displayElementsFilter(listIngredients, newIngredientsArray, "ingredients", recipesArray);
 }
@@ -164,26 +163,26 @@ function prepareIngredientsFilter(recipesArray) {
 //Création d'un tableau d'appareils en fonction des recettes en paramètre
 function prepareAppliancesFilter(recipesArray) {
     let appliancesArray = [];
-    for(let i = 0; i < recipesArray.length; i++) {
-        let appliance = recipesArray[i]["appliance"];
+    recipesArray.forEach(recipe => {
+        let appliance = recipe["appliance"];
         appliance = appliance.toLowerCase();
         appliancesArray.push(appliance);
-    }
+    });
     appliancesArray = getUniqueElements(appliancesArray);
     const selected = document.querySelectorAll(".list-appliances .item-selected");
     let newAppliancesArray = [];
     let insertElement;
-    for(let i = 0; i < appliancesArray.length; i++) {
+    appliancesArray.forEach(appliance => {
         insertElement = true;
-        for(let y = 0; y < selected.length; y++) {
-            if(appliancesArray[i] === selected[y].textContent) {
+        selected.forEach(element => {
+            if(appliance === element.textContent) {
                 insertElement = false;
             }
-        }
+        });
         if(insertElement === true) {
-            newAppliancesArray.push(appliancesArray[i]);
+            newAppliancesArray.push(appliance);
         }
-    }
+    });
     const listAppliances = document.querySelector(".list-appliances ul");
     displayElementsFilter(listAppliances, newAppliancesArray, "appliances", recipesArray);
 }
@@ -191,29 +190,29 @@ function prepareAppliancesFilter(recipesArray) {
 //Création d'un tableau d'ustensiles en fonction des recettes en paramètre
 function prepareUstensilsFilter(recipesArray) {
     let ustensilsArray = [];
-    for(let i = 0; i < recipesArray.length; i++) {
-        let ustensils = recipesArray[i]["ustensils"];
-        for(let y = 0; y < ustensils.length; y++) {
-            let ustensil = ustensils[y];
+    recipesArray.forEach(recipe => {
+        let ustensils = recipe["ustensils"];
+        ustensils.forEach(element => {
+            let ustensil = element;
             ustensil = ustensil.toLowerCase();
             ustensilsArray.push(ustensil);
-        }
-    }
+        });
+    });
     ustensilsArray = getUniqueElements(ustensilsArray);
     const selected = document.querySelectorAll(".list-ustensils .item-selected");
     let newUstensilsArray = [];
     let insertElement;
-    for(let i = 0; i < ustensilsArray.length; i++) {
+    ustensilsArray.forEach(ustensil => {
         insertElement = true;
-        for(let y = 0; y < selected.length; y++) {
-            if(ustensilsArray[i] === selected[y].textContent) {
+        selected.forEach(element => {
+            if(ustensil === element.textContent) {
                 insertElement = false;
             }
-        }
+        });
         if(insertElement === true) {
-            newUstensilsArray.push(ustensilsArray[i]);
+            newUstensilsArray.push(ustensil);
         }
-    }
+    });
     const listUstensils = document.querySelector(".list-ustensils ul");
     displayElementsFilter(listUstensils, newUstensilsArray, "ustensils");
 }
@@ -231,26 +230,23 @@ function displayElementsFilter(listElementsUl, elementsArray, type) {
         searchInput = document.querySelector(".search-ustensils");
     }
     listElementsUl.innerHTML = "";
-    for(let i = 0; i < elementsArray.length; i++) {
+    elementsArray.forEach(element => {
         const li = document.createElement("li");
-        li.textContent = elementsArray[i];
+        li.textContent = element;
         listElementsUl.appendChild(li);
-    }
+    });
     listenElementsFilter(listElementsUl, type);
     let arrayList = [];
     searchInput.addEventListener("input", () => {
         listElementsUl.innerHTML = "";
         arrayList = [];
-        for(let i = 0; i < elementsArray.length; i++) {
-            if(elementsArray[i].search(searchInput.value) !== -1) {
-                arrayList.push(elementsArray[i]);
-            }
-        }
-        for(let i = 0; i < arrayList.length; i++) {
+        arrayList = elementsArray.filter((element) => element.includes(searchInput.value));
+        console.log(arrayList);
+        arrayList.forEach(element => {
             const li = document.createElement("li");
-            li.textContent = arrayList[i];
+            li.textContent = element;
             listElementsUl.appendChild(li);
-        }
+        });
         listenElementsFilter(listElementsUl, type);
     });
 }

@@ -3,11 +3,11 @@ function getTags() {
     let tags = document.querySelectorAll(".item-selected");
     tags = Array.from(tags);
     let tagsTextContent = [];
-    for(let y = 0; y < tags.length; y++) {
-        if(tags[y].textContent !== "") {
-            tagsTextContent.push(tags[y].textContent);
+    tags.forEach(tag => {
+        if(tag.textContent !== "") {
+            tagsTextContent.push(tag.textContent);
         } 
-    }
+    });
     return tagsTextContent;
 }
 
@@ -34,7 +34,7 @@ function createTagSpan(element) {
 }
 
 //Fermeture du tag avec remise en ordre des recettes et des listes de filtres
-function closeTag(tagCloseImg, type) {
+function closeTag(tagCloseImg) {
     const selected = document.querySelectorAll(".item-selected");
     selected.forEach(select => {
         if(tagCloseImg.parentElement.textContent === select.textContent) {

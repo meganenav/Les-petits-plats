@@ -52,35 +52,35 @@ function searchRecipes() {
 function searchInputFunction(element, recipesArray) {
     let newRecipesArray = [];
     letters = element.value.toLowerCase();
-    for(let i = 0; i < recipesArray.length; i++) {
-        const verifName = verificationName(letters, recipes[i]);
-        const verifDescription = verificationDescription(letters, recipes[i]);
-        const verifIngredients = verificationIngredients(letters, recipes[i]);
+    recipesArray.forEach(recipe => {
+        const verifName = verificationName(letters, recipe);
+        const verifDescription = verificationDescription(letters, recipe);
+        const verifIngredients = verificationIngredients(letters, recipe);
         if(verifName || verifDescription || verifIngredients) {
-            newRecipesArray.push(recipesArray[i]);
+            newRecipesArray.push(recipe);
         }
-    }
+    });
     return newRecipesArray;
 }
 
 //Vérification des recettes avec les tags dans les ingrédients, ustensiles et appareils
 function searchElementTags(tagsElements, recipesArray) {
     let newRecipesArray = [];
-    for(let i = 0; i < recipesArray.length; i++) {
+    recipesArray.forEach(recipe => {
         let verif = true;
-        for(let y = 0; y < tagsElements.length; y++) {
-            tag = tagsElements[y].toLowerCase();
-            let verifIngredients = verificationIngredients(tagsElements[y], recipesArray[i]);
-            let verifAppliances = verificationAppliances(tagsElements[y], recipesArray[i]);
-            let verifUstensils = verificationUstensils(tagsElements[y], recipesArray[i]);
+        tagsElements.forEach(tag => {
+            tag = tag.toLowerCase();
+            let verifIngredients = verificationIngredients(tag, recipe);
+            let verifAppliances = verificationAppliances(tag, recipe);
+            let verifUstensils = verificationUstensils(tag, recipe);
             if(verifIngredients === false && verifAppliances === false && verifUstensils === false) {
                 verif = false;
             }
-        }
+        });
         if(verif === true) {
-            newRecipesArray.push(recipesArray[i]);
+            newRecipesArray.push(recipe);
         }
-    }
+    });
     return newRecipesArray;
 }
 
@@ -101,14 +101,14 @@ function verificationDescription(letters, recipe) {
 //Compare les lettres ou mots passés en paramètres et les ingrédients de la recette
 function verificationIngredients(letters, recipe) {
     const ingredientsArray = recipe["ingredients"];
-    let verifIngredients = false;     
-    for(let ingredientIndex = 0; ingredientIndex < ingredientsArray.length; ingredientIndex++) {
-        let ingredient = ingredientsArray[ingredientIndex]["ingredient"];
+    let verifIngredients = false;
+    ingredientsArray.forEach(ingredientElement => {
+        let ingredient = ingredientElement["ingredient"];
         ingredient = ingredient.toLowerCase();
         if(ingredient.search(letters) !== -1) {
             verifIngredients = true;
         }
-    }
+    });
     return verifIngredients;
 }
 
@@ -122,14 +122,14 @@ function verificationAppliances(letters, recipe) {
 //Compare les lettres ou mots passés en paramètres et les ustensiles de la recette
 function verificationUstensils(letters, recipe) {
     const ustensilsArray = recipe["ustensils"];
-    let verifUstensil = false;     
-    for(let i = 0; i < ustensilsArray.length; i++) {
-        let ustensil = ustensilsArray[i];
+    let verifUstensil = false;
+    ustensilsArray.forEach(ustensilElement => {
+        let ustensil = ustensilElement;
         ustensil = ustensil.toLowerCase();
         if(ustensil.search(letters) !== -1) {
             verifUstensil = true;
         }
-    }
+    });
     return verifUstensil;
 }
 
