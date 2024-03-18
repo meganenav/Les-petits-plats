@@ -36,7 +36,7 @@ function createTagSpan(element) {
 }
 
 //Fermeture du tag avec remise en ordre des recettes et des listes de filtres
-function closeTag(tagCloseImg, type) {
+function closeTag(tagCloseImg) {
     const selected = document.querySelectorAll(".item-selected");
     for(let i = 0; i < selected.length; i++) {
         if(tagCloseImg.parentElement.textContent === selected[i].textContent) {
@@ -75,7 +75,7 @@ function removeElementToSelected(element, ulElements, type) {
 }
 
 //Fermeture de l'élément sélectionné dans la liste déroulante
-function closeSelectedElement(element, type) {
+function closeSelectedElement(element) {
     const tags = document.querySelectorAll(".tag-span");
     for(let i = 0; i < tags.length; i++) {
         if(tags[i].textContent === element.textContent) {
