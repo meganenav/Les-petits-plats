@@ -15,7 +15,7 @@ function searchInputValue(searchInput) {
         document.querySelector(".recipes").style.display = "grid";
         document.querySelector(".recipes").innerHTML = "";
         document.querySelector(".list-ingredients ul").innerHTML = "";
-        init();
+        searchRecipes(recipesArray);
     }
 }
 
@@ -23,7 +23,7 @@ function searchInputValue(searchInput) {
 function searchRecipes() {
     let newRecipesArray = [];
     let recipesArray = recipes;
-    if(searchInput.value.length !== 0) {
+    if(searchInput.value.length >= 3) {
         recipesArray = searchInputFunction(searchInput, recipesArray);
     }
     let tagsElements = getTags();
@@ -105,6 +105,8 @@ function verificationIngredients(letters, recipe) {
     ingredientsArray.forEach(ingredientElement => {
         let ingredient = ingredientElement["ingredient"];
         ingredient = ingredient.toLowerCase();
+        ingredient = ingredient.replace(/[()]/g, "");
+        letters = letters.replace(/[()]/g, "");
         if(ingredient.search(letters) !== -1) {
             verifIngredients = true;
         }

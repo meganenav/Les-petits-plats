@@ -241,7 +241,6 @@ function displayElementsFilter(listElementsUl, elementsArray, type) {
         listElementsUl.innerHTML = "";
         arrayList = [];
         arrayList = elementsArray.filter((element) => element.includes(searchInput.value));
-        console.log(arrayList);
         arrayList.forEach(element => {
             const li = document.createElement("li");
             li.textContent = element;
