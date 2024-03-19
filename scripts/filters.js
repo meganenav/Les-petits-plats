@@ -34,7 +34,6 @@ function manageDisplayFilters() {
 
 //Affichage de la liste déroulante
 function showElementsFilter(element) {
-    console.log(element);
     let arrow;
     let listElement;
     let filter;
