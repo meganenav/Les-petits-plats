@@ -22,6 +22,7 @@ async function createRecipe(recipe) {
     article.classList.add("recipe-block");
     const imgRecipe = document.createElement("img");
     imgRecipe.setAttribute("src", "./assets/photos/" + recipe["image"]);
+    imgRecipe.setAttribute("alt", "Photo de la recette " + recipe["name"]);
     const divDuration = document.createElement("div");
     divDuration.classList.add("duration");
     divDuration.textContent = recipe["time"] + "min";
