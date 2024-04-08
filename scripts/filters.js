@@ -1,5 +1,8 @@
 //Mise en place des flèches sur les blocks de filtres, ajout d'un écouteur d'événement
-function manageDisplayFilters() {
+function initEvents() {
+    searchInput = document.querySelector(".search-input");
+    searchInput.addEventListener("input", searchRecipes);
+
     const arrowIngredients = document.querySelector(".arrow-ingredients");
     const arrowAppliances = document.querySelector(".arrow-appliances");
     const arrowUstensils = document.querySelector(".arrow-ustensils");

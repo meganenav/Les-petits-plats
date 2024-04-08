@@ -1,7 +1,7 @@
 let currentRecipesArray = [];
 
 //Fonction asynchrone d'initialisation qui crée les recettes et remplit les filtres
-async function init() {
+function init() {
     for(let i = 0; i < recipes.length; i++) {
         createRecipe(recipes[i]);
     }
@@ -12,7 +12,7 @@ async function init() {
 //Au chargement de la page, on lance init
 window.onload = () => {
     init();
-    manageDisplayFilters();
+    initEvents();
 };
 
 //Création de chaque recette

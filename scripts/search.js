@@ -1,43 +1,21 @@
 //Récupération du contenu du champ de recherche principal
-const searchInput = document.querySelector(".search-input");
-searchInput.addEventListener("input", () => {
-    searchInputValue(searchInput, "input");
-});
-
-//Traitement du champ de recherche principal, affichage des recettes filtrées ou non
-function searchInputValue(searchInput) {
-    let recipesArray = recipes;
-    if(searchInput.value.length >= 3) {
-        document.querySelector(".recipes").style.display = "grid";
-        searchRecipes(recipesArray);
-    }
-    if(searchInput.value.length < 3) {
-        document.querySelector(".recipes").style.display = "grid";
-        document.querySelector(".recipes").innerHTML = "";
-        document.querySelector(".list-ingredients ul").innerHTML = "";
-        searchRecipes(recipesArray);
-    }
-}
+let searchInput;
 
 //Recherche des recettes en fonction du champ de recherche éventuellement et/ou des tags
 function searchRecipes() {
-    let newRecipesArray = [];
-    let recipesArray = recipes;
+    let recipesArray = [...recipes];
     if(searchInput.value.length >= 3) {
         recipesArray = searchInputFunction(searchInput, recipesArray);
     }
     let tagsElements = getTags();
     if(tagsElements.length !== 0) {
-        newRecipesArray = searchElementTags(tagsElements, recipesArray);
+        recipesArray = searchElementTags(tagsElements, recipesArray);
     }
-    if(newRecipesArray.length === 0) {
-        newRecipesArray = recipesArray;
-    }
-    if(newRecipesArray.length !== 0) {
+    if(recipesArray.length !== 0) {
         document.querySelector(".recipes").innerHTML = "";
         document.querySelector(".recipes").style.display = "grid";
-        createNewRecipes(newRecipesArray);
-        currentRecipesArray = newRecipesArray;
+        createNewRecipes(recipesArray);
+        currentRecipesArray = recipesArray;
     }
     else {
         document.querySelector(".recipes").style.display = "flex";
