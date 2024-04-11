@@ -16,7 +16,7 @@ window.onload = () => {
 };
 
 //Création de chaque recette
-async function createRecipe(recipe) {
+function createRecipe(recipe) {
     const recipesSection = document.querySelector(".recipes");
     const article = document.createElement("article");
     article.classList.add("recipe-block");
