@@ -41,24 +41,10 @@ function showElementsFilter(element) {
     let listElement;
     let filter;
     let classElement;
-    if(element === "ingredients") {
-        arrow = document.querySelector(".arrow-ingredients");
-        listElement = document.querySelector(".list-ingredients");
-        filter = document.querySelector(".filter-ingredients");
-        classElement = "ingredients-open";
-    }
-    if(element === "appliances") {
-        arrow = document.querySelector(".arrow-appliances");
-        listElement = document.querySelector(".list-appliances");
-        filter = document.querySelector(".filter-appliances");
-        classElement = "appliances-open";
-    }
-    if(element === "ustensils") {
-        arrow = document.querySelector(".arrow-ustensils");
-        listElement = document.querySelector(".list-ustensils");
-        filter = document.querySelector(".filter-ustensils");
-        classElement = "ustensils-open";
-    }
+    arrow = document.querySelector(".arrow-" + element);
+    listElement = document.querySelector(".list-" + element);
+    filter = document.querySelector(".filter-" + element);
+    classElement = element + "-open";
     listElement.style.display = "block";
     listElement.classList.add(classElement);
     filter.style.borderBottomLeftRadius = "0";
@@ -74,33 +60,13 @@ function closeElementsFilter(type) {
     let filter;
     let search;
     let formElement;
-    if(type === "ingredients") {
-        arrow = document.querySelector(".arrow-ingredients");
-        listElement = document.querySelector(".list-ingredients");
-        classElement = "ingredients-open";
-        filter = document.querySelector(".filter-ingredients");
-        search = document.querySelector(".search-ingredients");
-        formElement =  document.querySelector(".search-ingredients").parentElement;
-        ul = document.querySelector(".ul-ingredients");
-    }
-    if(type === "appliances") {
-        arrow = document.querySelector(".arrow-appliances");
-        listElement = document.querySelector(".list-appliances");
-        classElement = "appliances-open";
-        filter = document.querySelector(".filter-appliances");
-        search = document.querySelector(".search-appliances");
-        formElement = document.querySelector(".search-appliances").parentElement;
-        ul = document.querySelector(".ul-appliances");
-    }
-    if(type === "ustensils") {
-        arrow = document.querySelector(".arrow-ustensils");
-        listElement = document.querySelector(".list-ustensils");
-        classElement = "ustensils-open";
-        filter = document.querySelector(".filter-ustensils");
-        search = document.querySelector(".search-ustensils");
-        formElement = document.querySelector(".search-ustensils").parentElement;
-        ul = document.querySelector(".ul-ustensils");
-    }
+    arrow = document.querySelector(".arrow-" + type);
+    listElement = document.querySelector(".list-" + type);
+    classElement = type + "-open";
+    filter = document.querySelector(".filter-" + type);
+    search = document.querySelector(".search-" + type);
+    formElement =  document.querySelector(".search-" + type).parentElement;
+    ul = document.querySelector(".ul-" + type);
     listElement.style.display = "none";
     listElement.classList.remove(classElement);
     if(search.value.length !== 0) {
@@ -223,15 +189,7 @@ function prepareUstensilsFilter(recipesArray) {
 //Affichage des éléments du tableau dans les listes déroulantes avec prise en compte du champ de recherche des filtres
 function displayElementsFilter(listElementsUl, elementsArray, type) {
     let searchInput;
-    if(type === "ingredients") {
-        searchInput = document.querySelector(".search-ingredients");
-    }
-    if(type === "appliances") {
-        searchInput = document.querySelector(".search-appliances");
-    }
-    if(type === "ustensils") {
-        searchInput = document.querySelector(".search-ustensils");
-    }
+    searchInput = document.querySelector(".search-" + type);
     listElementsUl.innerHTML = "";
     elementsArray.forEach(element => {
         const li = document.createElement("li");
